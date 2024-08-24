@@ -7,7 +7,6 @@ const Table = require('cli-table3');
 
 const TODO_FILE = 'todos.json';
 
-// Helper function to read todos from file
 function readTodos() {
   try {
     const data = fs.readFileSync(TODO_FILE, 'utf8');
@@ -17,12 +16,10 @@ function readTodos() {
   }
 }
 
-// Helper function to write todos to file
 function writeTodos(todos) {
   fs.writeFileSync(TODO_FILE, JSON.stringify(todos, null, 2));
 }
 
-// Helper function to list todos in a table
 function listTodos(todos) {
   if (todos.length === 0) {
     console.log(chalk.yellow('No todos found.'));
@@ -41,14 +38,12 @@ function listTodos(todos) {
   }
 }
 
-// Add a todo
 program
   .command('add <todo>')
   .description('Add a new todo')
   .action((todo) => {
     const todos = readTodos();
 
-    // Check for duplicate entries
     if (todos.some(t => t.task.toLowerCase() === todo.toLowerCase())) {
       console.log(chalk.red(`Todo "${todo}" already exists.`));
       return;
@@ -57,10 +52,9 @@ program
     todos.push({ id: todos.length + 1, task: todo, done: false });
     writeTodos(todos);
     console.log(chalk.green(`Added todo: "${todo}"`));
-    listTodos(todos);  // List todos after adding
+    listTodos(todos);  
   });
 
-// Delete a todo
 program
   .command('delete <id>')
   .description('Delete a todo by its ID')
@@ -74,11 +68,10 @@ program
     } else {
       writeTodos(todos);
       console.log(chalk.red(`Deleted todo with ID: ${id}`));
-      listTodos(todos);  // List todos after deleting
+      listTodos(todos);  
     }
   });
 
-// Mark a todo as done
 program
   .command('done <id>')
   .description('Mark a todo as done by its ID')
@@ -95,7 +88,6 @@ program
     }
   });
 
-// Update a todo
 program
   .command('update <id> <newTask>')
   .description('Update a todo task by its ID')
@@ -104,7 +96,6 @@ program
     const todo = todos.find((todo) => todo.id === parseInt(id));
 
     if (todo) {
-      // Check for duplicate entries
       if (todos.some(t => t.task.toLowerCase() === newTask.toLowerCase() && t.id !== parseInt(id))) {
         console.log(chalk.red(`Todo "${newTask}" already exists.`));
         return;
@@ -119,7 +110,6 @@ program
     }
   });
 
-// List all todos in a table
 program
   .command('list')
   .description('List all todos')
