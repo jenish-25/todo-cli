@@ -1,6 +1,4 @@
-Here’s a sample `README.md` file for your CLI todo list application:
 
-```markdown
 # Todo CLI
 
 A simple command-line interface (CLI) for managing todos using Node.js. This CLI allows you to add, delete, update, mark todos as done, and list all todos. Data is stored in a `todos.json` file.
