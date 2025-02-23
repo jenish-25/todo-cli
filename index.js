@@ -66,6 +66,11 @@ program
     if (todos.length === initialLength) {
       console.log(chalk.yellow(`Todo with ID: ${id} not found.`));
     } else {
+      todos=todos.map((todo,index)=>({
+        id:index+1,
+        task:todo.task,
+        done:todo.done
+      }))
       writeTodos(todos);
       console.log(chalk.red(`Deleted todo with ID: ${id}`));
       listTodos(todos);  
